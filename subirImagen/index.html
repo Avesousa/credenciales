@@ -14,20 +14,23 @@
 		<div class="contenedor">
 			<div class="formulario">
 				<div id="validador"></div>
-				<form method="POST" id="form" enctype="multipart/form-data">
-					<label>Ingresa DNI</label>
+				<form id="form">
+					<label>Ingresa DNI</label> <br/><br/>
 					<input type='number' id="documento" name="documento" oninput="buscar(this.value);" required/>
 					<br/><br/>
-					<label>Ingresa Nombre y Apellido</label>
+					<label>Ingresa Nombre y Apellido</label><br/><br/>
 					<input type='text' id="nombre" name="nombre" oninput="concatenar()" required/>
 					<input type="hidden" name="nombreConca" id="nombreConca">
 					<br/><br/>
 					<label>Ingresa Imagen</label><br/><br/>	
-					<input type='file' id="archivo" name="imagen" required/>
-					<br/><br/>	
-					<button type="submit" name="btn">Agregar</button>
+					<input type='file' id="archivo" name="imagen" oninput="leerArchivo(this.srcElement);" required/>
+					<br/><br/>
+					<div id="previsualizador">
+
+					</div>
+					<button type="submit" name="btn" onclick="subir()">Agregar</button>
 				</form>
-				<div id="cargador"></div>
+				<div id="cargador"> HOLA :D</div>
 			</div>
 		</div>
 	</body>

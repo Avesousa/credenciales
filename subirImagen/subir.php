@@ -12,16 +12,12 @@ if(!$conex){
 	$imagen = $_FILES['imagen']['tmp_name'];
 	$ruta = "imagenes/".$nombreConca.$documento.".jpg";
 	move_uploaded_file($imagen,$ruta);
-	echo var_dump($imagen);
-	$query = "insert into usuarios values('".$documento."','".$nombre."','".$ruta."')";
+	$query = "insert into usuario values('".$documento."','".$nombre."','".$ruta."')";
 	$resultado = $conex->query($query);
-
-	/*if($resultado){
-		//$conex->query("UPDATE")
-		echo "Insertado correctamente";
-
-	} else{
-		echo "No se ha podido cargar";
-	}*/
+	echo "Se ha cargado correctamente";
+	if($resultado){
+		$sqlQ = "UPDATE recuperadores SET estado = '1' WHERE (dni='".$documento."')";
+		$conex->query($sqlQ);
+	}
 }
 ?>

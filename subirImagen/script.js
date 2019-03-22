@@ -1,65 +1,90 @@
 
 function buscar(valor) {
-    console.log(valor)
     $.ajax({ 
         url:'buscador.php', 
         type: 'post',
         data: {'documento':valor},
         success: function(response) { 
-            $('#nombre').val(response);
+            $('#nombreBandera').val(response);
             concatenar();
-            console.log(response);
+            botonDisabled();
         }
         }); 
 }
 
 function concatenar(){
-    var e = document.getElementById("nombre");
-    var h = "";
-    for(var i = 0; i < e.value.length; i++){
-        console.log(e.value.charAt(i));
-        if(e.value.charAt(i) != " "){
-            h = h+e.value.charAt(i);
+    if(revisarNombre()){
+        var e = document.getElementById("nombre");
+        var h = "";
+        for(var i = 0; i < e.value.length; i++){
+            console.log(e.value.charAt(i));
+            if(e.value.charAt(i) != " "){
+                h = h+e.value.charAt(i);
+            }
         }
+        document.getElementById("nombreConca").value = h;
+        botonDisabled();
     }
-    document.getElementById("nombreConca").value = h;
-    console.log(h);
 
+}
+
+function revisarNombre(){
+    if($('#nombreBandera').val() != "dnirepetido"){
+        $('#nombre').val($('#nombreBandera').val());
+        $('#boton').attr('disabled',false);
+        $('#respuesta').html("");
+        return true;
+    }else if($('#nombreBandera').val() == null){
+        $('#boton').attr('disabled',true);
+        $('#respuesta').html("");
+    }else{
+        $('#respuesta').html("<p>El dni colocado, ya fue actualizada su foto");
+        $('#boton').attr('disabled',true);
+        return false;
+    }
 }
 
 function subir(){
     var data = new FormData(document.getElementById("form"));
     $.ajax({
         url:'subir.php',
-        type:'post',
         dataType: 'html',
+        type: 'POST',
         data: data,
-        success: function(response){
-            alert(response);
-        },
         processData: false,
-        contentType: false
-    })
-}
-
-var pre = document.getElementById("previsualizador");
-pre.onchange = function(e){
-    leerArchivo(e.srcElement);
-}
-
-function leerArchivo(input){
-    if(input.files && input.files[0]){
-        var lector = new FileReader();
-    
-        lector.onload = function(e){
-            var img = document.createElement('img');
-            img.id = 'imagen_visualizada';
-            img.src = e.target.result;
-    
-            var zona = document.getElementById('previsualizador');
-            zona.appendChild(img);
+        contentType: false,
+        success:function(e){
+            alert(e);
         }
+    })
+    //alert("Ya se ha cargado la información")
+}
+
+function inicial(){
+    var divarchivo = document.getElementById('archivo');
+    divarchivo.addEventListener('change',mostrarLaImagen,false);
     
-        lector.readAsDataURL(input.files[0]);
+}
+
+function mostrarLaImagen(e){
+    var archivo = e.target.files[0];
+    var lector = new FileReader();
+    lector.onload = function(ev){
+        var imagen = document.getElementById('imagen_previsualizador');
+        imagen.style.display = "block";
+        imagen.src= ev.target.result;
+    }
+    lector.readAsDataURL(archivo);
+}
+
+function botonDisabled(){
+    var d = document.getElementById("documento");
+    var n = document.getElementById("nombre");
+    if(d.value != "" && n.value != "" && d.value != " " && n.value != " "){
+        $('#boton').attr("disabled",false);
+    }else{
+        $('#boton').attr("disabled",true);
     }
 }
+
+window.addEventListener('load',inicial,false);

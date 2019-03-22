@@ -11,27 +11,46 @@
 </head>
 
 	<body>
+		<header>
+			<img src="recursos/img/logo.png" alt="">
+		</header>
 		<div class="contenedor">
 			<div class="formulario">
-				<div id="validador"></div>
-				<form id="form">
+				<div id="respuesta"></div>
+				<form id="form" onsubmit="subir()">
 					<label>Ingresa DNI</label> <br/><br/>
 					<input type='number' id="documento" name="documento" oninput="buscar(this.value);" required/>
 					<br/><br/>
 					<label>Ingresa Nombre y Apellido</label><br/><br/>
-					<input type='text' id="nombre" name="nombre" oninput="concatenar()" required/>
+					<input type='text' id="nombre" name="nombre" oninput="concatenar();" required/>
 					<input type="hidden" name="nombreConca" id="nombreConca">
 					<br/><br/>
-					<label>Ingresa Imagen</label><br/><br/>	
-					<input type='file' id="archivo" name="imagen" oninput="leerArchivo(this.srcElement);" required/>
+					<div class="div_file">
+						<p class="p_file">Agregar Foto</p>
+						<input type='file' id="archivo" name="imagen" required/>
+					</div>	
 					<br/><br/>
 					<div id="previsualizador">
-
+						<img id="imagen_previsualizador" src="" alt="imagenCargadas" style="display: none">
 					</div>
-					<button type="submit" name="btn" onclick="subir()">Agregar</button>
+					<div class="div_button">
+						<p class="p_button">Enviar</p>
+						<button id="boton" type="submit" name="btn" disabled>enviar</button>
+					</div>
 				</form>
-				<div id="cargador"> HOLA :D</div>
+				<div class="datosIncongnitos" style="display:none">
+					<input type="hidden" id="nombreBandera">
+				</div>
 			</div>
 		</div>
+		<footer>
+			<p>GOCAD
+				DIRECCIÓN GENERAL DE RECICLADO
+				SUBSECRETARÍA DE HIGIENE URBANA
+				MINISTERIO DE AMBIENTE Y ESPACIO PÚBLICO
+				AV. ING. HUERGO 941/949 11°
+				C1107AOJ | CABA - ARGENTINA
+			</p>
+		</footer>
 	</body>
 </html>
